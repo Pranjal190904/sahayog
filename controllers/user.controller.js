@@ -39,7 +39,7 @@ const user={
             {
                 return res.status(404).json({message:"user not found"});
             }
-            const matchPassword=bcrypt.compare(password,user.password);
+            const matchPassword=await bcrypt.compare(password,user.password);
             if(!matchPassword)
             {
                 return res.status(400).json({message:"password incorrect"});
