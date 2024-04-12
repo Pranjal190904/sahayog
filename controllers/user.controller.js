@@ -6,6 +6,11 @@ const user={
     register:async(req,res)=>{
         try{
             const {name,email,password,age,wellWisherName,wellWisherEmail,specialistName,specialistEmail}=req.body;
+            const user=await userModel.findOne({email:email});
+            if(user)
+            {
+                return res.status(400).json({message:"user already registered"});
+            }
             const hashedPassword=await bcrypt.hash(password,10);
             const newUser=new userModel({
                 name:name,
