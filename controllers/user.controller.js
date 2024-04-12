@@ -46,7 +46,7 @@ const user={
             }
             const accessToken=await signAccessToken(user._id);
             res.cookie('accessToken',accessToken,{httpOnly:true,sameSite:'None',secure:true});
-            return res.status(200).json({message:"login successful"});
+            return res.status(200).json({message:"login successful",name:user.name});
         }
         catch(err)
         {
