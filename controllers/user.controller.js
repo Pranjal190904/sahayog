@@ -1,6 +1,7 @@
 const userModel=require('../models/user.model');
 const bcrypt=require('bcrypt');
 const signAccessToken=require('../utils/token');
+const axios=require('axios');
 
 const user={
     register:async(req,res)=>{
@@ -50,6 +51,19 @@ const user={
         catch(err)
         {
             return res.status(500).json({message:"internal server error"});
+        }
+    },
+    stressLevel:async(req,res)=>{
+        try{
+            const {temp,stepCount}=req.body;
+            const url="https://stressdetectorhack36.onrender.com/predict";
+            const payload=[{"C":temp,"Step count":stepCount}];
+            const {data} = await axios.post(url, payload);
+            return res.status(200).json({stressLevel:data.prediction[0]});
+        }
+        catch(err)
+        {
+            return res.status(500).json({message:"internal server error"})
         }
     }
 }
