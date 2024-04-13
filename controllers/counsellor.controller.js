@@ -1,7 +1,6 @@
 const counsellorModel=require('../models/counsellor.model');
 const mailer=require('../utils/mailer');
 const userModel=require('../models/user.model');
-const {ObjectId}=require('mongoose').Types;
 
 const counsellor={
     counsellors:async(req,res)=>{
