@@ -18,7 +18,7 @@ const counsellor={
             const user=await userModel.findOne({_id:req.user});
             const {counsellorId, date, time}=req.body;
             const counsellor=await counsellorModel.findOne({_id:counsellorId});
-            await mailer(counsellor.email,user.name,user.email,date,time);
+            await mailer.appointment(counsellor.email,user.name,user.email,date,time);
             return res.status(200).json({message:"appointment booked successfully."})
         }
         catch(err){

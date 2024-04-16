@@ -1,6 +1,7 @@
 const userModel=require('../models/user.model');
 const bcrypt=require('bcrypt');
 const signAccessToken=require('../utils/token');
+const mailer=require('../utils/mailer');
 const axios=require('axios');
 
 const user={
@@ -59,6 +60,12 @@ const user={
             const url="https://stressdetectorhack36.onrender.com/predict";
             const payload=[{"C":temp,"Step count":stepCount}];
             const {data} = await axios.post(url, payload);
+            if(data.prediction[0]==2)
+            {
+                const userId=req.user;
+                const user=await userModel.findOne({_id:userId});
+                await mailer.stress(user.wellWisherEmail,user.name,user.wellWisherName);
+            }
             return res.status(200).json({stressLevel:data.prediction[0]});
         }
         catch(err)
